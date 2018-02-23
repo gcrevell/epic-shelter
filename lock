@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# This file will act as a mutex lock to ensure that only one
+# instance of a command will be running at a time. It uses a lock
+# file to check if another instance of the command is already
+# running. If not, we create the lock file and "obtain" the lock.
+# The lock file contains this process's PID. If the lock file
+# exists, but that PID is not running, we assume the lock is
+# free.
+
+# Define constants
+LOCKFILE=/share/Web/rclone/rclone.lock
+# This is the location of my puch notification scripts. They use
+# pushover.com to send a notification using cURL. Becuase they
+# contain API keys, they're not a part of the public repo.
+PUSH_NOTIFICATION_DIRECTORY=/share/Web/push_notifications/backups
+
+# If there is a lockfile AND that PID is still active
+if [ -e ${LOCKFILE} ] && kill -0 `cat ${LOCKFILE}`; then
+  # Push a notification that the backup did not start...
+	$PUSH_NOTIFICATION_DIRECTORY/push-high \
+		"Backup not started" \
+		"A backup is already running. Check for an undeleted lockfile?"
+  # And exit
+	exit
+fi
+
+# make sure the lockfile is removed when we exit and then claim it
+trap "rm -f ${LOCKFILE}; exit" INT TERM EXIT
+echo $$ > ${LOCKFILE}
+
+# do stuff
+/share/Web/backup/backup
+
+# Delete the lock file
+rm -f ${LOCKFILE}
