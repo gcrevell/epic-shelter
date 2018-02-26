@@ -45,6 +45,7 @@ $rclone \
 	--checkers 128 \
 	--checksum \
 	--ignore-size \
+	--track-renames \
 	sync \
 	/share/Plex/ \
 	GDriveVideosBackup:Current/
