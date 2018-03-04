@@ -55,5 +55,5 @@ $rclone \
 $PUSH_NOTIFICATION_DIRECTORY/push-url \
 	"Backup finished" \
 	"Finished backing up the Plex root directory." \
-	"rclone-logs.grevells.duckdns.org/$logfile" \
+	"http://rclone-logs.grevells.duckdns.org/$logfile" \
 	"View log"
