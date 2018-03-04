@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# This script will trigger a new Radarr backup, grab a list of all available
+# Radarr backups, download the most recent one (should be the one that was just
+# started), then excrypt it and upload it to google drive.
+#
+# To run, this script requires a few environment variables be passed in to it.
+# The variables required are:
+#
+# RADARR_API_KEY: The auth token for Radarr's API.
+# RADARR_URL: The base URL for Radarr.
+# RADARR_BACKUP_PASSWORD: The password to encrypt the backup with.
+#
+# This script requires the commands jq, rclone, wget, curl, and openssl.
+
+curl -v --header "X-Api-Key: $RADARR_API_KEY" -d '{"name": "backup"}' $RADARR_URL/api/command
+
+sleep 10
+
+RADARR_LAST_BACKUP=`curl -v --header "X-Api-Key: $RADARR_API_KEY" "$RADARR_URL/api/system/backup" | /usr/local/bin/jq --raw-output 'sort_by(.time) | .[-1]'`
+
+RADARR_LAST_BACKUP_LOCATION=`echo $RADARR_LAST_BACKUP | /usr/local/bin/jq --raw-output '.path'`
+RADARR_LAST_BACKUP_TIME=`echo $RADARR_LAST_BACKUP | /usr/local/bin/jq --raw-output '.time'`
+FORMATTED_TIME=`date -j -f "%Y-%m-%dT%H:%M:%SZ" $RADARR_LAST_BACKUP_TIME +%Y.%m.%d_%H.%M`
+LOCAL_BACKUP_DESTINATION="/Users/gabe/Downloads"
+BACKUP_DESTINATION_FILE=$LOCAL_BACKUP_DESTINATION/Radarr_backup_$FORMATTED_TIME.zip
+
+echo /usr/local/bin/wget "--header=X-Api-Key: $RADARR_API_KEY" -O "$BACKUP_DESTINATION_FILE" "$RADARR_URL/backup/scheduled/$RADARR_LAST_BACKUP_LOCATION"
+
+/usr/local/bin/wget "--header=X-Api-Key: $RADARR_API_KEY" -O "$BACKUP_DESTINATION_FILE" "$RADARR_URL/backup/scheduled/$RADARR_LAST_BACKUP_LOCATION"
+
+openssl aes-256-cbc -a -salt -pass "pass:$RADARR_BACKUP_PASSWORD" -in "$BACKUP_DESTINATION_FILE" -out "$BACKUP_DESTINATION_FILE.bin"
+
+rm $BACKUP_DESTINATION_FILE
+
+/usr/local/bin/rclone --config /Users/gabe/.config/rclone/rclone.conf -v move "$BACKUP_DESTINATION_FILE.bin" GDrive:Backups/Radarr\ DB
