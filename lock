@@ -30,7 +30,7 @@ trap "rm -f ${LOCKFILE}; exit" INT TERM EXIT
 echo $$ > ${LOCKFILE}
 
 # do stuff
-/share/Web/backup/backup
+/share/Web/bin/epic-shelter/backup
 
 # Delete the lock file
 rm -f ${LOCKFILE}
