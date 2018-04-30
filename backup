@@ -17,7 +17,7 @@ PUSH_NOTIFICATION_DIRECTORY="/share/Web/bin/push_notifications/backups"
 datename="$(date '+%Y-%m-%d_%H:%M:%S')"
 logfile="$datename.log"
 # The rclone executable
-$rclone="/share/Web/rclone/rclone"
+rclone="/share/Web/rclone/rclone"
 
 # Send a starting notification
 $PUSH_NOTIFICATION_DIRECTORY/push \
