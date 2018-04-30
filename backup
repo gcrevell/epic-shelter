@@ -37,17 +37,14 @@ $rclone \
 	--config /share/Web/rclone/rclone.conf \
 	--log-file "/share/Web/rclone/logs/$logfile" \
 	--log-level INFO \
+	--stats-file-name-length 0 \
 	--backup-dir "GDriveVideosBackup:Previous/$datename" \
-	--exclude '@Recently-Snapshot/**' \
-	--exclude '@Recycle/**' \
-	--exclude 'Photos/**' \
 	--exclude '.*{/**,}' \
 	--checkers 128 \
 	--checksum \
-	--ignore-size \
-	--track-renames \
+	--size-only \
 	sync \
-	/share/Plex/ \
+	/share/Media/Videos/ \
 	GDriveVideosBackup:Current/
 
 # Send a notification the backup finished, and include
