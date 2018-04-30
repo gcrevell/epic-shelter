@@ -12,7 +12,7 @@
 # include a link to view the log file on the web.
 
 # Create constants
-PUSH_NOTIFICATION_DIRECTORY=/share/Web/push_notifications/backups
+PUSH_NOTIFICATION_DIRECTORY="/share/Web/bin/push_notifications/backups"
 # Create a string like `2018-02-19_14:16:51`
 datename="$(date '+%Y-%m-%d_%H:%M:%S')"
 logfile="$datename.log"
