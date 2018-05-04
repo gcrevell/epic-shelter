@@ -22,7 +22,7 @@ rclone="/share/Web/rclone/rclone"
 # Send a starting notification
 $PUSH_NOTIFICATION_DIRECTORY/push \
 "Backup started" \
-"Started backing up the Plex root directory.";
+"Started backing up the Plex Photos directory.";
 
 # Run rclone. This will run the rclone executable in
 # `/share/Web`. It will use the the rclone config file.

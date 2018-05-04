@@ -22,7 +22,7 @@ rclone="/share/Web/rclone/rclone"
 # Send a starting notification
 $PUSH_NOTIFICATION_DIRECTORY/push \
 "Backup started" \
-"Started backing up the Plex root directory.";
+"Started backing up the Plex Videos directory.";
 
 # Run rclone. This will run the rclone executable in
 # `/share/Web`. It will use the the rclone config file.
@@ -50,6 +50,6 @@ $rclone \
 # a link to view the log on the web
 $PUSH_NOTIFICATION_DIRECTORY/push-url \
 	"Backup finished" \
-	"Finished backing up the Plex root directory." \
+	"Finished backing up the Plex Videos directory." \
 	"http://rclone-logs.grevells.duckdns.org/$logfile" \
 	"View log"
