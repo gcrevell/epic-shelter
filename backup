@@ -41,7 +41,6 @@ $rclone \
 	--backup-dir "GDriveVideosBackup:Previous/$datename" \
 	--exclude '.*{/**,}' \
 	--checkers 128 \
-	--checksum \
 	--size-only \
 	sync \
 	/share/Media/Videos/ \
