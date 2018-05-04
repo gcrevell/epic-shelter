@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# This backup program will use rclone to upload the entire
+# contents of my Plex directory to my encrypted remote.
+# It will send a notification that the backup is starting
+# before it is run. The rclone command will output the log
+# into a file. rclone will only upload files that have
+# changed. Any files that would be deleted or overwritten
+# will be moved into a backup directory on the remote,
+# allowing for versioning of the files. When finished, this
+# will send a push notificaiton using pushover.com that will
+# include a link to view the log file on the web.
+
+# Create constants
+PUSH_NOTIFICATION_DIRECTORY="/share/Web/bin/push_notifications/backups"
+# Create a string like `2018-02-19_14:16:51`
+datename="$(date '+%Y-%m-%d_%H:%M:%S')"
+logfile="$datename.photos.log"
+# The rclone executable
+rclone="/share/Web/rclone/rclone"
+
+# Send a starting notification
+$PUSH_NOTIFICATION_DIRECTORY/push \
+"Backup started" \
+"Started backing up the Plex root directory.";
+
+# Run rclone. This will run the rclone executable in
+# `/share/Web`. It will use the the rclone config file.
+# It will log info stats into the specified log file.
+$rclone \
+	--config /share/Web/rclone/rclone.conf \
+	--log-file "/share/Web/rclone/logs/$logfile" \
+	--log-level INFO \
+	--stats-file-name-length 0 \
+	--exclude '.*{/**,}' \
+	--checkers 128 \
+	--transfers 32 \
+	--size-only \
+	copy \
+	/share/Media/Photos/ \
+	GDrivePhotosBackup:
+
+# Send a notification the backup finished, and include
+# a link to view the log on the web
+$PUSH_NOTIFICATION_DIRECTORY/push-url \
+	"Photo backup finished" \
+	"Finished backing up Plex Photos directory." \
+	"http://rclone-logs.grevells.duckdns.org/$logfile" \
+	"View log"
