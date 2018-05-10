@@ -16,6 +16,7 @@ PUSH_NOTIFICATION_DIRECTORY="/share/Web/bin/push_notifications/backups"
 # Create a string like `2018-02-19_14:16:51`
 datename="$(date '+%Y-%m-%d_%H:%M:%S')"
 logfile="$datename.photos.log"
+logfile2="$datename.gdrive.photos.log"
 # The rclone executable
 rclone="/share/Web/rclone/rclone"
 
@@ -39,6 +40,21 @@ $rclone \
 	copy \
 	/share/Media/Photos/ \
 	GDrivePhotosBackup:
+
+# Run rclone. This will run the rclone executable in
+# `/share/Web`. It will use the the rclone config file.
+# It will log info stats into the specified log file.
+$rclone \
+	--config /share/Web/rclone/rclone.conf \
+	--log-file "/share/Web/rclone/logs/$logfile2" \
+	--log-level INFO \
+	--stats-file-name-length 0 \
+	--exclude '.*{/**,}' \
+	--checkers 128 \
+	--transfers 32 \
+	copy \
+	/share/Media/Photos/ \
+	GDrive:Google\ Photos
 
 # Send a notification the backup finished, and include
 # a link to view the log on the web
