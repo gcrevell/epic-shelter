@@ -36,7 +36,6 @@ $rclone \
 	--exclude '.*{/**,}' \
 	--checkers 128 \
 	--transfers 32 \
-	--size-only \
 	copy \
 	/share/Media/Photos/ \
 	GDrivePhotosBackup:
