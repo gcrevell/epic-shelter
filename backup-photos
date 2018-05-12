@@ -40,21 +40,6 @@ $rclone \
 	/share/Media/Photos/ \
 	GDrivePhotosBackup:
 
-# Run rclone. This will run the rclone executable in
-# `/share/Web`. It will use the the rclone config file.
-# It will log info stats into the specified log file.
-$rclone \
-	--config /share/Web/rclone/rclone.conf \
-	--log-file "/share/Web/rclone/logs/$logfile2" \
-	--log-level INFO \
-	--stats-file-name-length 0 \
-	--exclude '.*{/**,}' \
-	--checkers 128 \
-	--transfers 32 \
-	copy \
-	/share/Media/Photos/ \
-	GDrive:Google\ Photos
-
 # Send a notification the backup finished, and include
 # a link to view the log on the web
 $PUSH_NOTIFICATION_DIRECTORY/push-url \
