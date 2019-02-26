@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# This backup program will use rclone to upload the entire
+# contents of my Plex directory to my encrypted remote.
+# It will send a notification that the backup is starting
+# before it is run. The rclone command will output the log
+# into a file. rclone will only upload files that have
+# changed. Any files that would be deleted or overwritten
+# will be moved into a backup directory on the remote,
+# allowing for versioning of the files. When finished, this
+# will send a push notificaiton using pushover.com that will
+# include a link to view the log file on the web.
+
+# This now doesn't use rclone, but the idea is the same
+
+# Create constants
+PUSH_NOTIFICATION_DIRECTORY="/share/Web/bin/push_notifications/backups"
+# Create a string like `2018-02-19_14:16:51`
+datename="$(date '+%Y-%m-%d_%H:%M:%S')"
+logfile="/share/Web/rclone/logs/$datename.plex-db.log"
+
+# Send a starting notification
+$PUSH_NOTIFICATION_DIRECTORY/push \
+"Backup started" \
+"Started backing up the Plex database.";
+
+# Backup the Plex database. HashBackup will automatically
+# post the backup files to my Google Drive accounts, as
+# well as keeping a local copy on my Drobo
+/share/Web/bin/hb \
+	log \
+	backup \
+	-c /share/Drobo/Backups/plex/db \
+	/share/CACHEDEV2_DATA/.qpkg/PlexMediaServer/Library
+
+# Send a notification the backup finished
+$PUSH_NOTIFICATION_DIRECTORY/push \
+	"Backup finished" \
+	"Finished backing up the Plex database.";
