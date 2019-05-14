@@ -30,7 +30,7 @@ trap "rm -f ${LOCKFILE}; exit" INT TERM EXIT
 echo $$ > ${LOCKFILE}
 
 # do stuff
-/share/Web/bin/epic-shelter/backup
+/share/Web/bin/epic-shelter/backup-videos
 /share/Web/bin/epic-shelter/backup-plex-db
 /share/Web/bin/epic-shelter/backup-photos
 
