@@ -37,7 +37,7 @@ $rclone \
 	--checkers 128 \
 	--transfers 32 \
 	copy \
-	/share/Media/Photos/ \
+	/share/Photos/ \
 	GDrivePhotosBackup:
 
 # Send a notification the backup finished, and include

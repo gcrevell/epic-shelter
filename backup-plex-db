@@ -30,7 +30,7 @@ $PUSH_NOTIFICATION_DIRECTORY/push \
 /share/Web/bin/hb \
 	log \
 	backup \
-	-c /share/Drobo/Backups/plex/db \
+	-c /share/Backups/plex/db \
 	/share/CACHEDEV2_DATA/.qpkg/PlexMediaServer/Library
 
 # Send a notification the backup finished
