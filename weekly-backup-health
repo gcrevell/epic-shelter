@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# This file contains some weekly backup health checks for my backups. This will
+# run retain for the Plex database backup, compute some stats, and run some
+# selftests.
+
+# Because of the fact I can't lock and wait to run this, this should be run at
+# a time when no HashBackup functions will be running. With gigabit internet,
+# uploading to 2 Google Drive accounts, this should be about 6 am or so (limit
+# of 750 GB a day per account, so 1500 GB total, at a speed of 100 MB per
+# second, should take just over 4 hours to upload. It starts at midnight, and
+# should be done long before 6).
+
+# Retain
+/share/Web/bin/hb log retain -c /share/Backups/plex/db/ -s 7d4w3m4q5y
+
+# Run a full selftest of the database
+/share/Web/bin/hb log selftest -c /share/Backups/plex/db/ -v2
+# Run an incremental selftest of the data. Check the whole DB every 6 weeks
+/share/Web/bin/hb log selftest -c /share/Backups/plex/db/ -v4 --inc 7d/42d
+
+# Get some stats...
+backup_summary_database="$(/share/Web/bin/hb log stats -c /share/Backups/plex/db/)"
+
+# Database logs
+log_summary_database="$(/share/Web/bin/hb log -c /share/Backups/plex/db/ -s -d7 -x2 3>&2 2>&1 1>&3)"
+
+PUSH_NOTIFICATION_DIRECTORY="/share/Web/bin/push_notifications/backups"
+
+$PUSH_NOTIFICATION_DIRECTORY/push \
+"Database backup summary" \
+"$log_summary_database
+
+------------------------
+$backup_summary_database";
