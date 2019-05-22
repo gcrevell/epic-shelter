@@ -1,15 +1,13 @@
 #!/bin/bash
 
-# This backup program will use rclone to upload the entire
-# contents of my Plex directory to my encrypted remote.
+# This backup program will use hash backup to backup the entire
+# contents of my Plex videos directory to Google drive.
 # It will send a notification that the backup is starting
-# before it is run. The rclone command will output the log
-# into a file. rclone will only upload files that have
+# before it is run. The hb command will output the log
+# into a file. hb will only upload files that have
 # changed. Any files that would be deleted or overwritten
-# will be moved into a backup directory on the remote,
-# allowing for versioning of the files. When finished, this
-# will send a push notificaiton using pushover.com that will
-# include a link to view the log file on the web.
+# will be versioned by hash backup. When finished, this
+# will send a push notificaiton using pushover.com.
 
 # Create constants
 PUSH_NOTIFICATION_DIRECTORY="/share/Web/bin/push_notifications/backups"
