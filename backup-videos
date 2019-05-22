@@ -16,35 +16,20 @@ PUSH_NOTIFICATION_DIRECTORY="/share/Web/bin/push_notifications/backups"
 # Create a string like `2018-02-19_14:16:51`
 datename="$(date '+%Y-%m-%d_%H:%M:%S')"
 logfile="$datename.log"
-# The rclone executable
-rclone="/share/Web/rclone/rclone"
+# The hash backup executable
+hb="/share/Web/bin/hb"
 
 # Send a starting notification
 $PUSH_NOTIFICATION_DIRECTORY/push \
 "Backup started" \
 "Started backing up the Plex Videos directory.";
 
-# Run rclone. This will run the rclone executable in
-# `/share/Web`. It will use the the rclone config file.
-# It will log info stats into the specified log file. All
-# files that would be deleted or overwritten will be moved
-# into a backup folder to keep versioned backups. It will
-# ignore QNAP folders `Recycle` and `Recently-Snapchot`,
-# and all hidden files and folders. It will also ignore
-# Photos, as that has its own backup location. It will use
-# 128 checkers, checking only with the file's md5sum.
-$rclone \
-	--config /share/Web/rclone/rclone.conf \
-	--log-file "/share/Web/rclone/logs/$logfile" \
-	--log-level INFO \
-	--stats-file-name-length 0 \
-	--backup-dir "GDriveVideosBackup:Previous/$datename" \
-	--exclude '.*{/**,}' \
-	--checkers 128 \
-	--size-only \
-	sync \
-	/share/Media/Videos/ \
-	GDriveVideosBackup:Current/
+# Run hash backup
+$hb \
+	log \
+	backup \
+	-c /share/Backups/plex/media \
+	/share/Media/Videos
 
 # Send a notification the backup finished, and include
 # a link to view the log on the web
