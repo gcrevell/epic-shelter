@@ -33,8 +33,6 @@ $hb \
 
 # Send a notification the backup finished, and include
 # a link to view the log on the web
-$PUSH_NOTIFICATION_DIRECTORY/push-url \
+$PUSH_NOTIFICATION_DIRECTORY/push \
 	"Backup finished" \
-	"Finished backing up the Plex Videos directory." \
-	"http://rclone-logs.grevells.duckdns.org/$logfile" \
-	"View log"
+	"Finished backing up the Plex Videos directory.";
