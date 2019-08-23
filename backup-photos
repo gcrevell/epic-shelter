@@ -15,7 +15,7 @@
 PUSH_NOTIFICATION_DIRECTORY="/share/Web/bin/push_notifications/backups"
 # Create a string like `2018-02-19_14:16:51`
 datename="$(date '+%Y-%m-%d_%H:%M:%S')"
-logfile="$datename.photos.log"
+logfile="$datename.nutdrive.photos.log"
 logfile2="$datename.gdrive.photos.log"
 # The rclone executable
 rclone="/share/Web/rclone/rclone"
@@ -37,8 +37,8 @@ $rclone \
 	--checkers 128 \
 	--transfers 32 \
 	copy \
-	/share/Photos/ \
-	GDrivePhotosBackup:
+	/share/Photos/All\ Photos/ \
+	NutDrive:Backups/Photos
 
 # Send a notification the backup finished, and include
 # a link to view the log on the web
