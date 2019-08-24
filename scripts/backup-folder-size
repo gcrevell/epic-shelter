@@ -16,4 +16,4 @@ gdriveByteCount="$(echo $gdriveSizeOutput | grep -Eo '\(\d{1,} Bytes\)' | grep -
 nutdriveByteCount="$(echo $nutdriveSizeOutput | grep -Eo '\(\d{1,} Bytes\)' | grep -Eo '\d{1,}')"
 
 date="$(date +'%m/%d/%y %T')"
-echo "$date,$gdriveObjectCount,$gdriveByteCount,$nutdriveObjectCount,$nutdriveByteCount" >> /share/Web/rclone/size.csv
+echo "$date,$gdriveObjectCount,$gdriveByteCount,$nutdriveObjectCount,$nutdriveByteCount" >> /share/Web/rclone/backup_size.csv
