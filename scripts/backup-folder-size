@@ -6,8 +6,8 @@ set -e
 # The rclone executable
 rclone="/share/Web/rclone/rclone --config /share/Web/rclone/rclone.conf"
 
-gdriveSizeOutput="$($rclone size GDrive:)"
-nutdriveSizeOutput="$($rclone size NutDrive:)"
+gdriveSizeOutput="$($rclone size GDrive:Backups)"
+nutdriveSizeOutput="$($rclone size NutDrive:Backups)"
 
 gdriveObjectCount="$(echo $gdriveSizeOutput | grep -Eo 'Total objects: \d{1,}' | grep -Eo '\d{1,}')"
 nutdriveObjectCount="$(echo $nutdriveSizeOutput | grep -Eo 'Total objects: \d{1,}' | grep -Eo '\d{1,}')"
@@ -16,4 +16,4 @@ gdriveByteCount="$(echo $gdriveSizeOutput | grep -Eo '\(\d{1,} Bytes\)' | grep -
 nutdriveByteCount="$(echo $nutdriveSizeOutput | grep -Eo '\(\d{1,} Bytes\)' | grep -Eo '\d{1,}')"
 
 date="$(date +'%m/%d/%y %T')"
-echo "$date,$gdriveObjectCount,$gdriveByteCount,$nutdriveObjectCount,$nutdriveByteCount" >> test.txt
+echo "$date,$gdriveObjectCount,$gdriveByteCount,$nutdriveObjectCount,$nutdriveByteCount" >> /share/Web/rclone/size.csv
