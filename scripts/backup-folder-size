@@ -3,8 +3,8 @@
 # The rclone executable
 rclone="/share/Web/rclone/rclone --config /share/Web/rclone/rclone.conf"
 
-gdriveSizeOutput="$($rclone size GDrive:Backups/Plex/Media/hashbackup)"
-nutdriveSizeOutput="$($rclone size NutDrive:Backups/Plex/Media/hashbackup)"
+gdriveSizeOutput="$($rclone size GDrive:)"
+nutdriveSizeOutput="$($rclone size NutDrive:)"
 
 gdriveObjectCount="$(echo $gdriveSizeOutput | grep -Eo 'Total objects: \d{1,}' | grep -Eo '\d{1,}')"
 nutdriveObjectCount="$(echo $nutdriveSizeOutput | grep -Eo 'Total objects: \d{1,}' | grep -Eo '\d{1,}')"
