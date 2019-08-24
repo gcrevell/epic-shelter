@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# exit when any command fails
+set -e
+
 # The rclone executable
 rclone="/share/Web/rclone/rclone --config /share/Web/rclone/rclone.conf"
 
