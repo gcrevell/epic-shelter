@@ -9,11 +9,11 @@ rclone="/share/Web/rclone/rclone --config /share/Web/rclone/rclone.conf"
 gdriveSizeOutput="$($rclone size GDrive:Backups)"
 nutdriveSizeOutput="$($rclone size NutDrive:Backups)"
 
-gdriveObjectCount="$(echo $gdriveSizeOutput | grep -Eo 'Total objects: \d{1,}' | grep -Eo '\d{1,}')"
-nutdriveObjectCount="$(echo $nutdriveSizeOutput | grep -Eo 'Total objects: \d{1,}' | grep -Eo '\d{1,}')"
+gdriveObjectCount="$(echo $gdriveSizeOutput | grep -Eo 'Total objects: [0-9]*' | grep -Eo '[0-9]*')"
+nutdriveObjectCount="$(echo $nutdriveSizeOutput | grep -Eo 'Total objects: [0-9]*' | grep -Eo '[0-9]*')"
 
-gdriveByteCount="$(echo $gdriveSizeOutput | grep -Eo '\(\d{1,} Bytes\)' | grep -Eo '\d{1,}')"
-nutdriveByteCount="$(echo $nutdriveSizeOutput | grep -Eo '\(\d{1,} Bytes\)' | grep -Eo '\d{1,}')"
+gdriveByteCount="$(echo $gdriveSizeOutput | grep -Eo '\([0-9]* Bytes\)' | grep -Eo '[0-9]*')"
+nutdriveByteCount="$(echo $nutdriveSizeOutput | grep -Eo '\([0-9]* Bytes\)' | grep -Eo '[0-9]*')"
 
 date="$(date +'%m/%d/%y %T')"
 echo "$date,$gdriveObjectCount,$gdriveByteCount,$nutdriveObjectCount,$nutdriveByteCount" >> /share/Web/rclone/backup_size.csv
