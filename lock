@@ -9,7 +9,7 @@
 # free.
 
 # Define constants
-LOCKFILE="/share/Web/rclone/rclone.lock"
+LOCKFILE="/share/Web/bin/epic-shelter/backup.lock"
 # This is the location of my puch notification scripts. They use
 # pushover.com to send a notification using cURL. Becuase they
 # contain API keys, they're not a part of the public repo.
