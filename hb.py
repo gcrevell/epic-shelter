@@ -67,3 +67,45 @@ def run_backup(backup_dir, files_dir):
         integer -- The return code of the `hb` command
     """
     return subprocess.run([HB_EXECUTABLE, 'log', 'backup', '-c', backup_dir, files_dir]).returncode
+
+# Selftest methods
+
+# Log methods
+
+def get_media_backup_logs():
+    """
+    Get HashBackup logs for the media backups
+
+    Returns:
+        string -- The output of the HashBackup log command
+    """
+    return get_backup_logs(MEDIA_BACKUP_DIR)
+
+def get_plex_db_backup_logs():
+    """
+    Get HashBackup logs for the database backups
+
+    Returns:
+        string -- The output of the HashBackup log command
+    """
+    return get_backup_logs(PLEX_DB_BACKUP_DIR)
+
+def get_backup_logs(backup_dir):
+    """
+    Get HashBackup logs for the defined backup directory
+
+    Returns:
+        string -- The output of the HashBackup log command
+    """
+    return subprocess.run([HB_EXECUTABLE, 'log', '-c', backup_dir, '-s', '-d7', '-x2'], stdout=subprocess.PIPE).stdout
+
+# Stats methods
+
+def get_media_backup_stats():
+    return get_backup_stats(MEDIA_BACKUP_DIR)
+
+def get_plex_db_backup_stats():
+    return get_backup_stats(PLEX_DB_BACKUP_DIR)
+
+def get_backup_stats(backup_dir):
+    return subprocess.run([HB_EXECUTABLE, 'stats', '-c', backup_dir], stdout=subprocess.PIPE).stdout
