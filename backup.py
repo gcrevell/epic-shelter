@@ -32,6 +32,7 @@ if args.selftest:
 if args.logs:
     # media_stats = str(get_media_backup_stats())
     media_logs = get_media_backup_logs()
+    print(media_logs)
     # plex_db_stats = str(get_plex_db_backup_stats())
     # plex_db_logs = str(get_plex_db_backup_logs())
 
