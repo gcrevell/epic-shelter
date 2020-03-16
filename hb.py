@@ -110,7 +110,7 @@ def get_backup_logs(backup_dir):
     Returns:
         string -- The output of the HashBackup log command
     """
-    return subprocess.run([HB_EXECUTABLE, 'log', '-c', backup_dir, '-s', '-d7', '-x2'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT).stdout
+    return subprocess.run([HB_EXECUTABLE, 'log', '-c', backup_dir, '-s', '-d7', '-x2'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT).stdout.decode("utf-8")
 
 # Stats methods
 
@@ -142,7 +142,15 @@ def get_backup_stats(backup_dir):
     Returns:
         string -- The stats of the backup directory
     """
-    return subprocess.run([HB_EXECUTABLE, 'stats', '-c', backup_dir], stdout=subprocess.PIPE).stdout
+    backup_stats = subprocess.run([HB_EXECUTABLE, 'stats', '-c', backup_dir], stdout=subprocess.PIPE).stdout.decode("utf-8")
+    # Remove the first line (hashbackup info) and extra spaces
+    stats_array = backup_stats.split("\n")[2:]
+    stats_array_clean = []
+    for stat in stats_array:
+        stats_array_clean.append(stat.strip())
+    
+    return "\n".join(stats_array_clean)
+
 
 def selftest_media_backup():
     run_selftest(MEDIA_BACKUP_DIR, SELFTEST_LEVEL_DATABASE_CONTENT, SELFTEST_INCREMENTAL_SPAN_YEAR)
