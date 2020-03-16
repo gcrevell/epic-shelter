@@ -30,13 +30,14 @@ if args.selftest:
     selftest_plex_db_backup()
 
 if args.logs:
-    # media_stats = str(get_media_backup_stats())
-    media_logs = get_media_backup_logs()
+    media_stats = get_media_backup_stats().decode("utf-8") 
+    media_logs = get_media_backup_logs().decode("utf-8") 
     print(media_logs)
     # plex_db_stats = str(get_plex_db_backup_stats())
     # plex_db_logs = str(get_plex_db_backup_logs())
 
-    # media_alert = media_logs + "\n--------------------------------\n\n" + media_stats
+    media_alert = media_logs + "\n--------------------------------\n\n" + media_stats
+    print(media_alert)
     # plex_db_alert = plex_db_logs + "\n--------------------------------\n\n" + plex_db_stats
     
     send_message('Plex media', media_logs)
