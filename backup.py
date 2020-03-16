@@ -19,11 +19,11 @@ if args.upload:
 else:
     turn_off_destinations()
 
-if args.file is None:
-    backup_media()
-    backup_plex_db()
-else:
-    backup_media_file(args.file)
+# if args.file is None:
+#     backup_media()
+#     backup_plex_db()
+# else:
+#     backup_media_file(args.file)
 
 if args.selftest:
     selftest_media_backup()
@@ -31,12 +31,12 @@ if args.selftest:
 
 if args.logs:
     media_stats = str(get_media_backup_stats())
-    media_logs = str(get_media_backup_logs())
+    media_logs = get_media_backup_logs()
     plex_db_stats = str(get_plex_db_backup_stats())
     plex_db_logs = str(get_plex_db_backup_logs())
 
-    media_alert = media_logs + "\n--------------------------------\n\n" + media_stats
-    plex_db_alert = plex_db_logs + "\n--------------------------------\n\n" + plex_db_stats
+    # media_alert = media_logs + "\n--------------------------------\n\n" + media_stats
+    # plex_db_alert = plex_db_logs + "\n--------------------------------\n\n" + plex_db_stats
     
     send_message('Plex media', media_logs)
-    send_message('Plex database', plex_db_alert)
+    # send_message('Plex database', plex_db_alert)
