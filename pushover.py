@@ -8,7 +8,7 @@ def send_message(title, message):
         urllib.parse.urlencode({
             "token": "agixw6imtgs59zigj2mmzfspajstun",
             "user": "u8rfcaghrikib2i4qtkkazoqc4m9dd",
-            "title": title
+            "title": title,
             "message": message,
         }), { "Content-type": "application/x-www-form-urlencoded" })
     conn.getresponse()
