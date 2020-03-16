@@ -30,15 +30,18 @@ if args.selftest:
     selftest_plex_db_backup()
 
 if args.logs:
-    media_stats = get_media_backup_stats().decode("utf-8") 
-    media_logs = get_media_backup_logs().decode("utf-8") 
+    media_stats = get_media_backup_stats().decode("utf-8")
+    media_logs = get_media_backup_logs().decode("utf-8")
+    # Remove the first line (hashbackup info) and extra spaces
+    media_stats_clean = ("\n".join(media_stats.split("\n")[2:])).lstrip(' ')
     print(media_logs)
+    print(media_stats_clean)
     # plex_db_stats = str(get_plex_db_backup_stats())
     # plex_db_logs = str(get_plex_db_backup_logs())
 
-    media_alert = media_logs + "\n--------------------------------\n\n" + media_stats
+    media_alert = media_logs + "--------------------------------\n\n" + media_stats_clean
     print(media_alert)
     # plex_db_alert = plex_db_logs + "\n--------------------------------\n\n" + plex_db_stats
     
-    send_message('Plex media', media_logs)
+    send_message('Plex media', media_alert)
     # send_message('Plex database', plex_db_alert)
