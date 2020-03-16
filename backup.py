@@ -33,7 +33,7 @@ if args.logs:
     media_stats = get_media_backup_stats().decode("utf-8")
     media_logs = get_media_backup_logs().decode("utf-8")
     # Remove the first line (hashbackup info) and extra spaces
-    media_stats_clean = ("\n".join(media_stats.split("\n")[2:])).lstrip(' ')
+    media_stats_clean = ("\n".join(media_stats.split("\n")[2:])).lstrip()
     print(media_logs)
     print(media_stats_clean)
     # plex_db_stats = str(get_plex_db_backup_stats())
