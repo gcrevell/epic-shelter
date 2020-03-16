@@ -110,7 +110,7 @@ def get_backup_logs(backup_dir):
     Returns:
         string -- The output of the HashBackup log command
     """
-    return subprocess.run([HB_EXECUTABLE, 'log', '-c', backup_dir, '-s', '-d7', '-x2'], stdout=subprocess.PIPE).stdout
+    return subprocess.run([HB_EXECUTABLE, 'log', '-c', backup_dir, '-s', '-d7', '-x2'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT).stdout
 
 # Stats methods
 
