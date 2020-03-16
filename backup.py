@@ -38,5 +38,5 @@ if args.logs:
     media_alert = media_logs + "\n--------------------------------\n\n" + media_stats
     plex_db_alert = plex_db_logs + "\n--------------------------------\n\n" + plex_db_stats
     
-    send_message('Plex media', media_alert)
+    send_message('Plex media', media_logs)
     send_message('Plex database', plex_db_alert)
