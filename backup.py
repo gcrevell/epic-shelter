@@ -19,11 +19,11 @@ if args.upload:
 else:
     turn_off_destinations()
 
-# if args.file is None:
-#     backup_media()
-#     backup_plex_db()
-# else:
-#     backup_media_file(args.file)
+if args.file is None:
+    backup_media()
+    backup_plex_db()
+else:
+    backup_media_file(args.file)
 
 if args.selftest:
     selftest_media_backup()
