@@ -23,6 +23,16 @@ MEDIA_DIR = '/share/Media/Videos'
 # The plex database directory path
 PLEX_DB_DIR = '/share/CACHEDEV2_DATA/.qpkg/PlexMediaServer/Library'
 
+SELFTEST_LEVEL_DATABASE_READABLE = '-v0'
+SELFTEST_LEVEL_DATABASE_INTEGRITY = '-v1'
+SELFTEST_LEVEL_DATABASE_CONTENT = '-v2'
+SELFTEST_LEVEL_LOCAL_ARCHIVES = '-v3'
+SELFTEST_LEVEL_LOCAL_REMOTE_ARCHIVES = '-v4'
+SELFTEST_LEVEL_FILE_RESTORE = '-v5'
+
+SELFTEST_INCREMENTAL_SPAN_MONTH = '1d/30d'
+SELFTEST_INCREMENTAL_SPAN_YEAR = '1d/365d'
+
 # Backup methods
 
 def backup_media_file(file):
@@ -133,3 +143,14 @@ def get_backup_stats(backup_dir):
         string -- The stats of the backup directory
     """
     return subprocess.run([HB_EXECUTABLE, 'stats', '-c', backup_dir], stdout=subprocess.PIPE).stdout
+
+def selftest_media_backup():
+    run_selftest(MEDIA_BACKUP_DIR, SELFTEST_LEVEL_DATABASE_CONTENT, SELFTEST_INCREMENTAL_SPAN_YEAR)
+    run_selftest(MEDIA_BACKUP_DIR, SELFTEST_LEVEL_LOCAL_REMOTE_ARCHIVES, SELFTEST_INCREMENTAL_SPAN_YEAR)
+
+def selftest_plex_db_backup():
+    run_selftest(PLEX_DB_BACKUP_DIR, SELFTEST_LEVEL_DATABASE_CONTENT, SELFTEST_INCREMENTAL_SPAN_MONTH)
+    run_selftest(PLEX_DB_BACKUP_DIR, SELFTEST_LEVEL_LOCAL_REMOTE_ARCHIVES, SELFTEST_INCREMENTAL_SPAN_MONTH)
+
+def run_selftest(backup_dir, check_level, incremental_span):
+    return subprocess.run([HB_EXECUTABLE, 'selftest', '-c', backup_dir, check_level, '--inc', incremental_span]).returncode
