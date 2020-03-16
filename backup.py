@@ -2,8 +2,8 @@
 
 from hb import backup_media_file, backup_media, backup_plex_db, get_media_backup_logs, get_plex_db_backup_logs, get_media_backup_stats, get_plex_db_backup_stats, selftest_media_backup, selftest_plex_db_backup
 from destination_helpers import turn_on_destinations, turn_off_destinations
+from pushover import send_message
 import argparse
-from pushover import Client
 
 # Set up and get arguments
 parser = argparse.ArgumentParser(description='Coordinate file backups.')
@@ -30,8 +30,6 @@ if args.selftest:
     selftest_plex_db_backup()
 
 if args.logs:
-    client = Client('u8rfcaghrikib2i4qtkkazoqc4m9dd', api_token='agixw6imtgs59zigj2mmzfspajstun')
-
     media_stats = get_media_backup_stats()
     media_logs = get_media_backup_logs()
     plex_db_stats = get_plex_db_backup_stats()
@@ -40,5 +38,5 @@ if args.logs:
     media_alert = media_logs + "\n--------------------------------\n\n" + media_stats
     plex_db_alert = plex_db_logs + "\n--------------------------------\n\n" + plex_db_stats
     
-    client.send_message(media_alert, title="Plex media")
-    client.send_message(plex_db_alert, title="Plex database")
+    send_message('Plex media', media_alert)
+    send_message('Plex database', plex_db_alert)
