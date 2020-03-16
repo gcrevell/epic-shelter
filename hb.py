@@ -94,6 +94,9 @@ def get_backup_logs(backup_dir):
     """
     Get HashBackup logs for the defined backup directory
 
+    Arguments:
+        backup_dir {string} -- The backup directory path to get the logs for
+
     Returns:
         string -- The output of the HashBackup log command
     """
@@ -102,10 +105,31 @@ def get_backup_logs(backup_dir):
 # Stats methods
 
 def get_media_backup_stats():
+    """
+    Get backup stats for the media files
+    
+    Returns:
+        string -- The backup stats
+    """
     return get_backup_stats(MEDIA_BACKUP_DIR)
 
 def get_plex_db_backup_stats():
+    """
+    Get backup stats for the Plex DB backup
+    
+    Returns:
+        string -- The backup stats
+    """
     return get_backup_stats(PLEX_DB_BACKUP_DIR)
 
 def get_backup_stats(backup_dir):
+    """
+    Get the backup stats for a given backup folder
+    
+    Arguments:
+        backup_dir {string} -- The backup directory path to get the stats for
+    
+    Returns:
+        string -- The stats of the backup directory
+    """
     return subprocess.run([HB_EXECUTABLE, 'stats', '-c', backup_dir], stdout=subprocess.PIPE).stdout
