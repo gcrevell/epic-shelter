@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# This is just a global command to call the `backup` command.
+
+./backup.py -u $sonarr_episodefile_path
