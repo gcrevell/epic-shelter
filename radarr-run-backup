@@ -2,4 +2,4 @@
 
 # This is just a global command to call the `backup` command.
 
-/share/Web/bin/epic-shelter/backup.py -u $radarr_movie_path
+/share/Web/bin/epic-shelter/backup.py "$radarr_movie_path"
